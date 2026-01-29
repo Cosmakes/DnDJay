@@ -16,7 +16,12 @@ For my build of the DnDJay, I used the following building materials:
 | 1x | Joy It ARD-ProMicro         | https://joy-it.net/en/products/ard_pro-micro |
 | 1x | 2.9' ePaper-Display | https://www.az-delivery.de/en/products/2-9-zoll-epaper-display |
 | 1x | Joystick Module |https://joy-it.net/en/products/COM-KY023JM |
+| 1x | Potentiometer | (Similar to:) https://www.conrad.com/en/p/alpha-rv16af-20-15k-b10k-rv16af20kb10km-single-turn-rotary-pot-mono-200-mw-10-k-1-pc-s-1694304.html |
 | 22x | Cherry MX Mechanical Keys | https://shop.cherry.de/de-de/cherry-mx-rgb-red-switch-kit.html |
-| 1x | Potentiometer |Cell 1, Row 2 |
+| 22x | Diodes | Source |
+| 6x | LED | Source |
+| 1x | Button | Source |
+
+
 
 ### Step 2: 

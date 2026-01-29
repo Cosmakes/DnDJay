@@ -10,12 +10,12 @@ If you want to build the DnDJay yourself, here is a guide how I did it.
 
 For my build of the DnDJay, I used the following building materials:
 
-| Quantity      | Item          | Source | 
-| ------------- | ------------- |
-| 1x | RaspberryPi 3A+          |
-| Cell 1, Row 2 | Cell 1, Row 2 |
-| Cell 1, Row 2 | Cell 1, Row 2 |
-| Cell 1, Row 2 | Cell 1, Row 2 |
-| Cell 1, Row 2 | Cell 1, Row 2 |
+| Quantity      | Item          | Source        | 
+| ------------- | ------------- | ------------- |
+| 1x | RaspberryPi 3A+          | Cell 1, Row 2 |
+| Cell 1, Row 2 | Cell 1, Row 2 | Cell 1, Row 2 |
+| Cell 1, Row 2 | Cell 1, Row 2 |Cell 1, Row 2 |
+| Cell 1, Row 2 | Cell 1, Row 2 |Cell 1, Row 2 |
+| Cell 1, Row 2 | Cell 1, Row 2 |Cell 1, Row 2 |
 
 ### Step 2: 

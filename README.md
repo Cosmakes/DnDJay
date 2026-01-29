@@ -49,6 +49,8 @@ Do not solder on the mechanical keys yet, they should first be clipped into the 
 Upload the source code found in /Arduinocode/Arduinocode.ino to the Arduino using the Arduino IDE and a microUSB cable.
 #### RaspberryPi
 Use the Raspberry Pi Imager (https://www.raspberrypi.com/software/) to flash Raspbian (add Version) on the microSD card.
+Within the Imager, feel free to already add login information for wifi, in case you are planning to use the samba data transfer feature of the DnDJay.
+Once you have flashed the image, insert the microSD card into your Pi, connect the Pi to a keyboard and to a screen and 
 
 
 

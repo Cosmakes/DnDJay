@@ -13,6 +13,7 @@ For my build of the DnDJay, I used the following building materials:
 | Quantity      | Item          | Source        | 
 | ------------- | ------------- | ------------- |
 | 1x | RaspberryPi 3A+          | https://www.raspberrypi.com/products/raspberry-pi-3-model-a-plus/ |
+| 1x | MicroSD card for the RaspberryPi 3A+          | Whatever works best for you, I suggest at least 32GB of storage. |
 | 1x | Joy It ARD-ProMicro         | https://joy-it.net/en/products/ard_pro-micro |
 | 1x | 2.9' ePaper-Display | https://www.az-delivery.de/en/products/2-9-zoll-epaper-display |
 | 1x | Custom PCB | PCB Folder |
@@ -40,3 +41,5 @@ In this step, solder the following pieces to the PCB:
 - Button
 
 Do not solder on the mechanical keys yet, they should first be clipped into the top piece of the build.
+
+

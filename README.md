@@ -6,11 +6,11 @@ Be aware that this is my first build of this sort, so some things could definite
 
 If you want to build the DnDJay yourself, here is a guide how I did it.
 
-## Step 1: Gathering materials
+### Step 1: Gathering materials
 
 For my build of the DnDJay, I used the following building materials:
 
-| Quantity      | Item          |
+| Quantity      | Item          | Source | 
 | ------------- | ------------- |
 | 1x | RaspberryPi 3A+          |
 | Cell 1, Row 2 | Cell 1, Row 2 |
@@ -18,4 +18,4 @@ For my build of the DnDJay, I used the following building materials:
 | Cell 1, Row 2 | Cell 1, Row 2 |
 | Cell 1, Row 2 | Cell 1, Row 2 |
 
-## Step 2: 
+### Step 2: 

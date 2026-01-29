@@ -15,13 +15,28 @@ For my build of the DnDJay, I used the following building materials:
 | 1x | RaspberryPi 3A+          | https://www.raspberrypi.com/products/raspberry-pi-3-model-a-plus/ |
 | 1x | Joy It ARD-ProMicro         | https://joy-it.net/en/products/ard_pro-micro |
 | 1x | 2.9' ePaper-Display | https://www.az-delivery.de/en/products/2-9-zoll-epaper-display |
+| 1x | Custom PCB | PCB Folder |
 | 1x | Joystick Module |https://joy-it.net/en/products/COM-KY023JM |
 | 1x | Potentiometer | (Similar to:) https://www.conrad.com/en/p/alpha-rv16af-20-15k-b10k-rv16af20kb10km-single-turn-rotary-pot-mono-200-mw-10-k-1-pc-s-1694304.html |
 | 22x | Cherry MX Mechanical Keys | https://shop.cherry.de/de-de/cherry-mx-rgb-red-switch-kit.html |
 | 22x | Diodes | Source |
 | 6x | LED | Source |
 | 1x | Button | Source |
+| 1x | Voltcraft power source | https://www.conrad.com/en/p/voltcraft-vc-wt-k512-power-bank-10000-mah-fast-charge-lipo-black-status-display-3027882.html?searchType=SearchRedirect |
 
 
 
-### Step 2: 
+### Step 2: Soldering
+
+In this step, solder the following pieces to the PCB:
+
+- RaspberryPi 3A+
+- Joy It ARD-ProMicro
+- 2.9' ePaper-Display
+- Joystick Module
+- Potentiometer
+- Diodes
+- LEDs
+- Button
+
+Do not solder on the mechanical keys yet, they should first be clipped into the top piece of the build.

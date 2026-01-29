@@ -21,7 +21,8 @@ For my build of the DnDJay, I used the following components:
 | 1x | Potentiometer | (Similar to:) https://www.conrad.com/en/p/alpha-rv16af-20-15k-b10k-rv16af20kb10km-single-turn-rotary-pot-mono-200-mw-10-k-1-pc-s-1694304.html |
 | 22x | Cherry MX Mechanical Keys | https://shop.cherry.de/de-de/cherry-mx-rgb-red-switch-kit.html |
 | 22x | Diodes | Source |
-| 6x | LED | Source |
+| 6x | LED | https://www.conrad.com/en/p/tru-components-led-wired-white-circular-5-mm-12500-mcd-20-25-20-ma-1577386.html |
+| 6x | 470kOhm Resistor | https://www.conrad.com/en/p/tru-components-1584345-tc-mf0w4ff4700kit203-metal-film-resistor-470-axial-lead-0207-0-25-w-1-100-pc-s-1584345.html |
 | 1x | Button | Source |
 | 1x | Voltcraft power source | https://www.conrad.com/en/p/voltcraft-vc-wt-k512-power-bank-10000-mah-fast-charge-lipo-black-status-display-3027882.html?searchType=SearchRedirect |
 

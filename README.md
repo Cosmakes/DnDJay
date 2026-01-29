@@ -58,6 +58,7 @@ Time to boot up the Pi!
 Once you connect the Pi to power, the red LED should turn on (Power) and the green LED should start flashing irregularly (Booting). If either of these things do not happen, you might need to reassess if you performed all steps until here correctly or if your Pi is working.
 
 Once your Pi has booted up, type the following command into the terminal:
+
 `sudo raspi-config`
 
 

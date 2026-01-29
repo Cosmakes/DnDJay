@@ -13,6 +13,7 @@ For my build of the DnDJay, I used the following building materials:
 | Quantity      | Item          | Source        | 
 | ------------- | ------------- | ------------- |
 | 1x | RaspberryPi 3A+          | https://www.raspberrypi.com/products/raspberry-pi-3-model-a-plus/ |
+| 1x | Joy It ARD-ProMicro         | https://joy-it.net/en/products/ard_pro-micro |
 | 1x | 2.9' ePaper-Display | https://www.az-delivery.de/en/products/2-9-zoll-epaper-display |
 | 1x | Joystick Module |https://joy-it.net/en/products/COM-KY023JM |
 | 22x | Cherry MX Mechanical Keys | https://shop.cherry.de/de-de/cherry-mx-rgb-red-switch-kit.html |

@@ -48,9 +48,18 @@ Do not solder on the mechanical keys yet, they should first be clipped into the 
 #### Arduino/Joy It ProMicro
 Upload the source code found in /Arduinocode/Arduinocode.ino to the Arduino using the Arduino IDE and a microUSB cable.
 #### RaspberryPi
-Use the Raspberry Pi Imager (https://www.raspberrypi.com/software/) to flash Raspbian (add Version) on the microSD card.
+This setup takes some time, because we need to tweak a few system settings on the Pi, implement a python environment, etc.
+##### 1: Flash RaspbianOS
+Use the Raspberry Pi Imager (https://www.raspberrypi.com/software/) to flash RaspbianOS (add Version) on the microSD card.
 Within the Imager, feel free to already add login information for wifi, in case you are planning to use the samba data transfer feature of the DnDJay.
-Once you have flashed the image, insert the microSD card into your Pi, connect the Pi to a keyboard and to a screen and 
+##### 2: First boot + system settings adjustments.
+Once you have flashed the image, insert the microSD card into your Pi, connect the Pi to a keyboard via USB, to a screen via HDMI and lastly to a power supply with a sufficiently stable voltage via the microUSB port.
+Time to boot up the Pi!
+Once you connect the Pi to power, the red LED should turn on (Power) and the green LED should start flashing irregularly (Booting). If either of these things do not happen, you might need to reassess if you performed all steps until here correctly or if your Pi is working.
+
+Once your Pi has booted up, type the following command into the terminal:
+`sudo raspi-config`
+
 
 
 

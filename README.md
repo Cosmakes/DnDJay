@@ -6,9 +6,9 @@ Be aware that this is my first build of this sort, so some things could definite
 
 If you want to build the DnDJay yourself, here is a guide how I did it.
 
-### Step 1: Gathering materials
+### Step 1: Gathering components
 
-For my build of the DnDJay, I used the following building materials:
+For my build of the DnDJay, I used the following components:
 
 | Quantity      | Item          | Source        | 
 | ------------- | ------------- | ------------- |
@@ -41,5 +41,12 @@ In this step, solder the following pieces to the PCB:
 - Button
 
 Do not solder on the mechanical keys yet, they should first be clipped into the top piece of the build.
+
+### Step 3: Software installation and testing
+#### Arduino/Joy It ProMicro
+Upload the source code found in /Arduinocode/Arduinocode.ino to the Arduino using the Arduino IDE and a microUSB cable.
+#### RaspberryPi
+Use the Raspberry Pi Imager (https://www.raspberrypi.com/software/) to flash Raspbian (add Version) on the microSD card.
+
 
 

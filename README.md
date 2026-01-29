@@ -37,6 +37,7 @@ In this step, solder the following pieces to the PCB:
 - 2.9' ePaper-Display
 - Joystick Module
 - Potentiometer
+- Resistors
 - Diodes
 - LEDs
 - Button

@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2026-01-30T16:23:02Z",
+        "GenerationSoftware": {
+            "Application": "Fusion Electronics",
+            "Vendor": "Autodesk",
+            "Version": "9.7.0"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.6608,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "DnDJayPCB v25"
+        },
+        "Owner": "Bela Erlinghagen <bela@erlinghagen.org>",
+        "Size": {
+            "X": 185,
+            "Y": 87.5
+        }
+    }
+}

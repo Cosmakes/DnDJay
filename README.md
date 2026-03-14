@@ -24,7 +24,7 @@ For my build of the DnDJay, I used the following components:
 | 6x | LED | https://www.conrad.com/en/p/tru-components-led-wired-white-circular-5-mm-12500-mcd-20-25-20-ma-1577386.html |
 | 6x | 470kOhm Resistor | https://www.conrad.com/en/p/tru-components-1584345-tc-mf0w4ff4700kit203-metal-film-resistor-470-axial-lead-0207-0-25-w-1-100-pc-s-1584345.html |
 | 1x | Button | Source |
-| 1x | Voltcraft power source | https://www.conrad.com/en/p/voltcraft-vc-wt-k512-power-bank-10000-mah-fast-charge-lipo-black-status-display-3027882.html?searchType=SearchRedirect |
+| 1x | Voltcraft power source (optional) | https://www.conrad.com/en/p/voltcraft-vc-wt-k512-power-bank-10000-mah-fast-charge-lipo-black-status-display-3027882.html?searchType=SearchRedirect |
 
 
 
@@ -42,17 +42,33 @@ In this step, solder the following pieces to the PCB:
 - LEDs
 - Button
 
+Important!
 Do not solder on the mechanical keys yet, they should first be clipped into the top piece of the build. This is what the PCB should look like in the end:
 ![PCB Front Soldered](https://github.com/Cosmakes/DnDJay/blob/main/Images/PCBFrontPostsolder.jpg)
 ![PCB Back Soldered](https://github.com/Cosmakes/DnDJay/blob/main/Images/PCBBackPostsolder.jpg)
 
-### Step 3: Click the mechanical keys into the frame
+Notice that I was using an older version of the PCB in which the Ground was not properly routed across the PCB. That has been fixed by manually scraping free the copper of the ground plane and connecting it. This has been fixed in the new version I uploaded, but I have personally never tested the new PCB, so be aware that it might not work (but it should). You can also manually scrape the copper and connect the ground planes just as I did. I provide both the [old](https://github.com/Cosmakes/DnDJay/tree/main/PCBFiles/OldPCB) and the new files.
 
-Now that the PCB is ready, you can clip the mechanical keys into the [frame](https://github.com/Cosmakes/DnDJay/blob/main/3DPrintingFiles/KeyFrame.stl)
+### Step 3: Click the mechanical keys into the frame and solder the keys to the PCB
 
-### Step 3: Software installation and testing
+Now that the PCB is ready, you can clip the mechanical keys into the [frame](https://github.com/Cosmakes/DnDJay/blob/main/3DPrintingFiles/KeyFrame.stl). Make sure the orientation of the keys is correct (refer to the PCB to determine how a key has to be oriented in the frame).
+
+![Keys in Piece](https://github.com/Cosmakes/DnDJay/blob/main/Images/ButtonsPluggedIn.jpg)
+
+
+Once all keys are in place, press the frame with the keys onto the PCB and solder the keys to it.
+
+### Step 4: Connect the Pi via a 40Pin connection cable and build the case
+
+With everything soldered into place, you can now connect the Pi to the PCB via a 40Pin connection cable. Make sure you get the orientation right here as well. If you want, you can already test if everything is working at this point. For this, you can skip forward to Step 5 and run some tests with the software installed.
+
+To build the case, first slide 4 3M screws into the top cover piece:
+![Screws in Piece](https://github.com/Cosmakes/DnDJay/blob/main/Images/ButtonsPluggedIn.jpg)
+
+
+### Step 5: Software installation and testing
 #### Arduino/Joy It ProMicro
-Upload the source code found in /Arduinocode/Arduinocode.ino to the Arduino using the Arduino IDE and a microUSB cable.
+Upload the source code found in /Arduinocode/Arduinocode.ino to the Arduino using the Arduino IDE and a microUSB cable. The JoyIt ProMicro is often not recognized correctly by the Arduino IDE, so you may have to set the board to "Arduino Leonardo".
 #### RaspberryPi
 This setup takes some time, because we need to tweak a few system settings on the Pi, implement a python environment, etc.
 ##### 1: Flash RaspbianOS

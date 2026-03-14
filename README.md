@@ -32,7 +32,7 @@ For my build of the DnDJay, I used the following components:
 
 In this step, solder the following pieces to the PCB:
 
-- RaspberryPi 3A+
+- RaspberryPi 40 Pin Connections
 - Joy It ARD-ProMicro
 - 2.9' ePaper-Display
 - Joystick Module
@@ -42,7 +42,8 @@ In this step, solder the following pieces to the PCB:
 - LEDs
 - Button
 
-Do not solder on the mechanical keys yet, they should first be clipped into the top piece of the build.
+Do not solder on the mechanical keys yet, they should first be clipped into the top piece of the build. This is what the PCB should look like in the end:
+![PCB Front Soldered](https://github.com/Cosmakes/DnDJay/blob/main/Images/PCBFrontPostsolder.jpg)
 
 ### Step 3: Software installation and testing
 #### Arduino/Joy It ProMicro

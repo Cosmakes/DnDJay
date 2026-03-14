@@ -44,6 +44,7 @@ In this step, solder the following pieces to the PCB:
 
 Do not solder on the mechanical keys yet, they should first be clipped into the top piece of the build. This is what the PCB should look like in the end:
 ![PCB Front Soldered](https://github.com/Cosmakes/DnDJay/blob/main/Images/PCBFrontPostsolder.jpg)
+![PCB Back Soldered](https://github.com/Cosmakes/DnDJay/blob/main/Images/PCBBackPostsolder.jpg)
 
 ### Step 3: Software installation and testing
 #### Arduino/Joy It ProMicro

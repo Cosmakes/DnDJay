@@ -1,9 +1,9 @@
 {
 	"id": "dndjay",
-	"name": "DnDJay Soundboard & Battlemap",
+	"name": "DnDJay Soundboard",
 	"version": "1.0.0",
 	"minAppVersion": "1.7.2",
-	"description": "A tabletop control console: a 5-channel Web Audio soundboard with loadouts, scenes and live meters, plus a battlemap controller that streams vault images/video to a Raspberry Pi display.",
+	"description": "A tabletop control console: a 4-channel Web Audio soundboard with loadouts, scenes and live meters.",
 	"author": "Cosmakes",
 	"isDesktopOnly": false,
 	"authorUrl":"https://github.com/Cosmakes/DnDJay"

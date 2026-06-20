@@ -1,0 +1,826 @@
+/* ==========================================================================
+   DnDJay — soundboard & battlemap console styles
+   ========================================================================== */
+
+.dndjay-root {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 0;
+	gap: 0;
+	/* Floor the width so every component stays clearly visible; narrower panes
+	   scroll rather than collapse the layout. */
+	min-width: 300px;
+
+	/* Make the pane itself a query container so the console reflows to the
+	   pane width (works when docked beside a note), not the viewport. The size
+	   variables below are the wide-desktop defaults; the @container rules near
+	   the bottom retune them as the pane narrows. */
+	container: dndjay / inline-size;
+	--dj-strip-w: 110px;
+	--dj-meter-h: 140px;
+	--dj-fader-w: 34px;
+	--dj-pad-h: 74px; /* pad min-height — sized for touch */
+	--dj-gap: 10px;
+	--dj-btn: 40px; /* strip transport buttons — touch targets */
+	--dj-btn-h: 38px;
+	--dj-rail: 40px; /* left icon-rail button size */
+	--dj-name-fs: 13px;
+	--dj-pad-fs: 13px;
+}
+
+/* -- tab bar --------------------------------------------------------------- */
+.dndjay-tabbar {
+	display: flex;
+	justify-content: center;
+	gap: 6px;
+	padding: 8px 10px 0;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+.dndjay-tab {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 14px;
+	border-radius: 6px 6px 0 0;
+	cursor: pointer;
+	color: var(--text-muted);
+	font-weight: 600;
+	user-select: none;
+}
+.dndjay-tab:hover {
+	background: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+.dndjay-tab.is-active {
+	background: var(--background-secondary);
+	color: var(--text-normal);
+	box-shadow: inset 0 -2px 0 var(--interactive-accent);
+}
+.dndjay-tab-icon {
+	display: inline-flex;
+}
+.dndjay-tab-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.dndjay-body {
+	flex: 1;
+	overflow: auto;
+	padding: 10px;
+}
+
+.dndjay-hint {
+	color: var(--text-muted);
+	font-size: 12px;
+}
+
+/* ==========================================================================
+   Music tab
+   ========================================================================== */
+.dndjay-music {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+/* -- loadout row ----------------------------------------------------------- */
+.dndjay-loadout-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.dndjay-loadout-label {
+	font-weight: 600;
+}
+.dndjay-loadout-select {
+	min-width: 160px;
+}
+
+/* -- pads ------------------------------------------------------------------ */
+/* Fixed 4 columns → the 12 pads always lay out as 3 rows. */
+.dndjay-pad-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: var(--dj-gap);
+}
+.dndjay-pad-grid.is-flipping {
+	transform-origin: top center;
+	animation: dndjay-pad-flip 240ms ease;
+}
+@keyframes dndjay-pad-flip {
+	0% {
+		transform: perspective(900px) rotateX(-90deg);
+		opacity: 0.15;
+	}
+	55% {
+		opacity: 1;
+	}
+	100% {
+		transform: perspective(900px) rotateX(0deg);
+		opacity: 1;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.dndjay-pad-grid.is-flipping {
+		animation: none;
+	}
+}
+.dndjay-pad {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	min-height: var(--dj-pad-h);
+	padding: 8px;
+	border-radius: 10px;
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-secondary);
+	cursor: pointer;
+	font-size: var(--dj-pad-fs);
+	font-weight: 600;
+	line-height: 1.25;
+	overflow: hidden; /* hard guarantee: nothing escapes the pad bounds */
+	transition: transform 0.05s ease, background 0.1s ease;
+}
+/* One-shot bank: tint the pad frame so the flipped view reads as "Quick". */
+.dndjay-pad-grid.is-quick .dndjay-pad:not(.is-empty) {
+	border-color: color-mix(in srgb, #ef4444 55%, var(--background-modifier-border));
+	background: color-mix(in srgb, #ef4444 8%, var(--background-secondary));
+}
+
+/* Pad label. Default: wrap onto up to 3 lines and clamp with an ellipsis, so
+   short/medium names show in full and never spill past the button. Names too
+   long even for that get `.is-marquee` (added in JS once measured) and scroll
+   horizontally instead, resting at each end. */
+.dndjay-pad-name {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	overflow: hidden;
+	width: 100%;
+	max-width: 100%;
+	text-align: center;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+.dndjay-pad-name.is-marquee {
+	display: block;
+	white-space: nowrap;
+	-webkit-line-clamp: initial;
+	line-clamp: initial;
+	word-break: normal;
+	overflow-wrap: normal;
+}
+.dndjay-pad-name.is-marquee .dndjay-pad-name-text {
+	display: inline-block;
+	will-change: transform;
+	animation: dndjay-pad-marquee var(--marquee-dur, 8s) ease-in-out infinite alternate;
+}
+@keyframes dndjay-pad-marquee {
+	0%,
+	22% {
+		transform: translateX(0);
+	}
+	78%,
+	100% {
+		transform: translateX(var(--marquee-shift, 0));
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.dndjay-pad-name.is-marquee .dndjay-pad-name-text {
+		animation: none;
+	}
+}
+.dndjay-pad:hover {
+	background: var(--background-modifier-hover);
+}
+.dndjay-pad:active {
+	transform: scale(0.97);
+}
+.dndjay-pad.is-empty {
+	color: var(--text-faint);
+	font-weight: 400;
+	font-style: italic;
+}
+.dndjay-pad.is-tinted {
+	background: color-mix(in srgb, var(--pad-tint) 38%, var(--background-secondary));
+	border-color: var(--pad-tint);
+	color: var(--text-on-accent, #fff);
+}
+.dndjay-pad.is-incoming {
+	background: color-mix(in srgb, var(--pad-tint) 22%, var(--background-secondary));
+	border-style: dashed;
+	color: var(--text-normal);
+}
+
+/* -- mixer ----------------------------------------------------------------- */
+.dndjay-mixer {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+}
+.dndjay-strips {
+	display: flex;
+	flex-wrap: wrap; /* wrap onto rows rather than clip when the pane is narrow */
+	justify-content: center;
+	gap: var(--dj-gap);
+	flex: 1;
+	min-width: 0;
+}
+.dndjay-strip {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--dj-gap);
+	flex: 1 1 var(--dj-strip-w);
+	min-width: 88px; /* keeps the two-up transport buttons from overflowing */
+	max-width: 150px;
+	padding: 8px 6px;
+	border-radius: 10px;
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-secondary);
+	cursor: pointer;
+}
+.dndjay-strip.is-selected {
+	border-color: var(--ch-accent);
+	box-shadow: 0 0 0 1px var(--ch-accent) inset;
+}
+.dndjay-strip.is-quick {
+	border-left: 3px solid var(--ch-accent);
+	background: var(--background-primary-alt);
+}
+
+.dndjay-strip-header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	width: 100%;
+}
+.dndjay-strip-accent {
+	width: 100%;
+	height: 4px;
+	border-radius: 2px;
+	background: var(--ch-accent);
+}
+.dndjay-strip-title {
+	display: flex;
+	align-items: baseline;
+	gap: 5px;
+	max-width: 100%;
+}
+.dndjay-strip-name {
+	font-size: var(--dj-name-fs);
+	font-weight: 600;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.dndjay-strip-loaded {
+	font-size: 10px;
+	color: var(--text-muted);
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.dndjay-strip-body {
+	display: flex;
+	gap: var(--dj-gap);
+	align-items: stretch;
+	height: var(--dj-meter-h);
+}
+
+/* meter */
+.dndjay-meter {
+	position: relative;
+	width: 10px;
+	height: var(--dj-meter-h);
+	border-radius: 4px;
+	background: var(--background-modifier-border);
+	overflow: hidden;
+}
+.dndjay-meter-fill {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 0%;
+	background-image: linear-gradient(
+		to top,
+		#22c55e 0%,
+		#22c55e 55%,
+		#eab308 78%,
+		#ef4444 100%
+	);
+	background-size: 100% var(--dj-meter-h);
+	background-position: bottom;
+	background-repeat: no-repeat;
+}
+
+/* fader */
+.dndjay-fader {
+	position: relative;
+	width: var(--dj-fader-w);
+	height: var(--dj-meter-h);
+	cursor: ns-resize;
+	touch-action: none;
+}
+.dndjay-fader-track {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 10px;
+	height: 100%;
+	border-radius: 5px;
+	background: var(--background-modifier-border);
+}
+.dndjay-fader-fill {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 50%;
+	border-radius: 4px;
+	opacity: 0.85;
+}
+.dndjay-fader-thumb {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(var(--dj-fader-w) - 4px);
+	height: 18px;
+	border-radius: 5px;
+	background: var(--background-primary);
+	border: 2px solid var(--ch-accent, #888);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* transport buttons */
+.dndjay-strip-controls {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 6px;
+	justify-content: center;
+	width: 100%;
+}
+.dndjay-icon-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-width: var(--dj-btn);
+	height: var(--dj-btn-h);
+	padding: 0;
+	border-radius: 8px;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	color: var(--text-muted);
+	cursor: pointer;
+}
+.dndjay-icon-btn:hover {
+	background: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+.dndjay-icon-btn svg {
+	width: 18px;
+	height: 18px;
+}
+.dndjay-icon-btn.is-active {
+	background: var(--ch-accent, var(--interactive-accent));
+	border-color: var(--ch-accent, var(--interactive-accent));
+	color: #fff;
+}
+.dndjay-mute-btn {
+	grid-column: span 2;
+	width: 100%;
+}
+
+/* Help button (loadout row / battlemap top bar): fixed-size, pinned right.
+   Overrides the strip-control icon-btn's full-width sizing. */
+.dndjay-help-btn {
+	width: 34px;
+	min-width: 34px;
+	height: 30px;
+	flex: 0 0 auto;
+	margin-left: auto;
+}
+
+/* -- side controls (left icon rail) --------------------------------------- */
+.dndjay-side {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	flex: 0 0 auto;
+	align-items: stretch;
+}
+/* Icon-only rail buttons (labels live in their tooltips). */
+.dndjay-text-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--dj-rail);
+	height: var(--dj-rail);
+	padding: 0;
+	border-radius: 8px;
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-primary);
+	color: var(--text-normal);
+	cursor: pointer;
+}
+.dndjay-text-btn:hover {
+	background: var(--background-modifier-hover);
+}
+.dndjay-text-btn.is-active {
+	background: var(--interactive-accent);
+	border-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+.dndjay-btn-icon {
+	display: inline-flex;
+}
+.dndjay-btn-icon svg {
+	width: 19px;
+	height: 19px;
+}
+.dndjay-trigger-btn {
+	background: var(--interactive-accent);
+	border-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+.dndjay-trigger-btn:hover {
+	background: var(--interactive-accent-hover);
+}
+
+.dndjay-segmented {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.dndjay-segmented-label {
+	font-size: 11px;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+.dndjay-segmented-group {
+	display: flex;
+	border-radius: 6px;
+	overflow: hidden;
+	border: 1px solid var(--background-modifier-border);
+}
+.dndjay-seg-btn {
+	flex: 1;
+	padding: 5px 8px;
+	border: none;
+	background: var(--background-primary);
+	color: var(--text-muted);
+	cursor: pointer;
+	font-size: 12px;
+}
+.dndjay-seg-btn:not(:last-child) {
+	border-right: 1px solid var(--background-modifier-border);
+}
+.dndjay-seg-btn.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+/* ==========================================================================
+   Battlemap tab
+   ========================================================================== */
+.dndjay-bm-topbar {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 8px;
+}
+.dndjay-bm-cols {
+	display: flex;
+	gap: 14px;
+	height: 100%;
+	align-items: stretch;
+}
+
+/* -- library --------------------------------------------------------------- */
+.dndjay-bm-library {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 260px;
+	flex: 0 0 260px;
+}
+.dndjay-bm-search {
+	width: 100%;
+}
+.dndjay-bm-list {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	overflow: auto;
+	padding-right: 4px;
+}
+.dndjay-bm-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	cursor: pointer;
+}
+.dndjay-bm-row:hover {
+	background: var(--background-modifier-hover);
+}
+.dndjay-bm-row.is-selected {
+	border-color: var(--interactive-accent);
+	background: var(--background-secondary);
+}
+.dndjay-bm-thumb {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	flex: 0 0 44px;
+	border-radius: 6px;
+	overflow: hidden;
+	background: var(--background-primary-alt);
+	color: var(--text-muted);
+}
+.dndjay-bm-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.dndjay-bm-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+.dndjay-bm-filename {
+	font-size: 13px;
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.dndjay-bm-badges {
+	display: flex;
+	gap: 4px;
+}
+.dndjay-badge {
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	padding: 1px 6px;
+	border-radius: 999px;
+	background: var(--background-modifier-border);
+	color: var(--text-muted);
+}
+.dndjay-badge.is-image {
+	background: #1d4ed8;
+	color: #fff;
+}
+.dndjay-badge.is-video {
+	background: #7c3aed;
+	color: #fff;
+}
+.dndjay-badge.is-onair {
+	background: #dc2626;
+	color: #fff;
+}
+
+/* -- framing stage --------------------------------------------------------- */
+.dndjay-bm-stage-col {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex: 1;
+	min-width: 0;
+}
+.dndjay-bm-stage {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border-radius: 10px;
+	overflow: hidden;
+	background: #000;
+	border: 1px solid var(--background-modifier-border);
+}
+.dndjay-bm-frame {
+	position: absolute;
+	inset: 0;
+	cursor: grab;
+	touch-action: none;
+}
+.dndjay-bm-frame:active {
+	cursor: grabbing;
+}
+.dndjay-bm-media {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform-origin: center center;
+	will-change: transform;
+}
+.dndjay-bm-media img,
+.dndjay-bm-media video {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+.dndjay-bm-cropframe {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+	border-radius: 10px;
+}
+.dndjay-bm-empty {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-faint);
+}
+
+.dndjay-bm-controls {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+.dndjay-bm-zoom {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex: 1;
+	min-width: 160px;
+}
+.dndjay-bm-zoom input[type='range'] {
+	flex: 1;
+}
+.dndjay-bm-zoom-readout {
+	font-variant-numeric: tabular-nums;
+	font-size: 12px;
+	color: var(--text-muted);
+	min-width: 42px;
+	text-align: right;
+}
+.dndjay-bm-push {
+	margin-left: auto;
+	background: var(--interactive-accent);
+	border-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+.dndjay-bm-status {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	padding: 8px 10px;
+	border-radius: 8px;
+	background: var(--background-secondary);
+	font-size: 12px;
+	color: var(--text-muted);
+}
+.dndjay-status-dot {
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: var(--text-faint);
+}
+.dndjay-status-dot.is-connected {
+	background: #22c55e;
+	box-shadow: 0 0 6px #22c55e;
+}
+.dndjay-status-dot.is-connecting {
+	background: #eab308;
+}
+.dndjay-status-dot.is-disconnected {
+	background: #ef4444;
+}
+.dndjay-status-text {
+	font-weight: 600;
+	color: var(--text-normal);
+}
+.dndjay-status-sep {
+	color: var(--text-faint);
+}
+
+@container dndjay (max-width: 640px) {
+	.dndjay-bm-cols {
+		flex-direction: column;
+	}
+	.dndjay-bm-library {
+		width: 100%;
+		flex: 0 0 auto;
+		max-height: 220px; /* cap the list so the 16:9 stage stays visible */
+	}
+	.dndjay-bm-thumb {
+		width: 38px;
+		height: 38px;
+		flex: 0 0 38px;
+	}
+}
+
+/* ==========================================================================
+   Fluid breakpoints — retune the size variables as the *pane* narrows.
+   The overrides live on .dndjay-body (a container can't query itself) and
+   inherit down to every component via the CSS variables above.
+   ========================================================================== */
+@container dndjay (max-width: 820px) {
+	.dndjay-body {
+		--dj-strip-w: 100px;
+		--dj-meter-h: 128px;
+		--dj-pad-h: 70px;
+		--dj-gap: 9px;
+	}
+}
+@container dndjay (max-width: 640px) {
+	.dndjay-body {
+		--dj-strip-w: 92px;
+		--dj-meter-h: 120px;
+		--dj-pad-h: 66px;
+		--dj-gap: 8px;
+	}
+}
+@container dndjay (max-width: 460px) {
+	.dndjay-body {
+		--dj-strip-w: 88px;
+		--dj-meter-h: 108px;
+		--dj-pad-h: 62px;
+		--dj-gap: 7px;
+		--dj-btn: 38px;
+		--dj-pad-fs: 12px;
+		--dj-name-fs: 12px;
+	}
+}
+@container dndjay (max-width: 340px) {
+	.dndjay-body {
+		--dj-meter-h: 96px;
+		--dj-pad-h: 56px;
+		--dj-gap: 6px;
+		--dj-btn: 36px;
+		--dj-btn-h: 36px;
+		--dj-pad-fs: 11px;
+	}
+	/* Drop the per-strip "loaded sound" subtitle to claw back vertical space. */
+	.dndjay-strip-loaded {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   Popups (help + scene settings modals)
+   ========================================================================== */
+.dndjay-help-heading {
+	margin: 14px 0 4px;
+}
+.dndjay-help-list {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	gap: 4px 12px;
+	margin: 0;
+}
+.dndjay-help-list dt {
+	font-weight: 600;
+	color: var(--text-normal);
+}
+.dndjay-help-list dd {
+	margin: 0;
+	color: var(--text-muted);
+}
+/* The scene-settings modal reuses the segmented controls; give them room. */
+.modal .dndjay-segmented {
+	margin-bottom: 14px;
+}
+.modal .dndjay-segmented-group {
+	margin-top: 4px;
+}
+.modal .dndjay-seg-btn {
+	padding: 8px 10px;
+	font-size: 13px;
+}
+
+@media (max-width: 480px) {
+	.dndjay-help-list {
+		grid-template-columns: 1fr;
+		gap: 0 0;
+	}
+	.dndjay-help-list dd {
+		margin: 0 0 8px;
+	}
+}

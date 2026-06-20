@@ -1,0 +1,20 @@
+[Unit]
+Description=mpv fullscreen display for DnDJay
+After=multi-user.target
+
+[Service]
+# Headless DRM rendering; holds stills indefinitely and idles when nothing is loaded.
+ExecStart=/usr/bin/mpv \
+  --idle=yes --force-window=yes --fullscreen --keep-open=yes \
+  --image-display-duration=inf --no-osc --no-input-default-bindings \
+  --vo=gpu --gpu-context=drm \
+  --input-ipc-server=/tmp/mpv-dndjay.sock
+Restart=always
+RestartSec=2
+# A user with video/render group access (default 'pi' on Raspberry Pi OS).
+User=pi
+Group=video
+SupplementaryGroups=render input tty
+
+[Install]
+WantedBy=multi-user.target

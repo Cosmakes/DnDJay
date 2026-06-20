@@ -73,57 +73,6 @@ stopped per the setting.
 
 ---
 
-## Battlemap tab
-
-> **Hidden in the current release.** The Battlemap tab is feature-complete in code
-> but still being refined, so it's hidden from the view for now (set
-> `BATTLEMAP_ENABLED = true` in `src/view/ConsoleView.ts` to bring it back). The
-> rest of this section describes it for when it returns.
-
-- **Left** — a searchable library of every image/video in the vault, each with a
-  thumbnail, an `image`/`video` badge, and an `on air` marker on the one showing.
-- **Right** — the framing stage. **Drag** to pan, **scroll / pinch** to zoom;
-  use the zoom slider, **rotate left/right**, **Reset**, **Blank**, and **Push to
-  screen**. Selecting a map loads it and (when connected) pushes it to the Pi.
-  Framing changes stream **live** to the Pi (throttled). The status bar shows the
-  connection state, the Pi address, what's on screen, and the current zoom.
-
-Configure the Pi **host/IP** and **port** in settings, and use **Test
-connection** to check reachability.
-
----
-
-## Raspberry Pi display node
-
-The plugin is the remote; a small agent on the Pi caches and renders what it's
-sent. A reference agent lives in [`pi-agent/`](pi-agent/) and implements the
-protocol in the plan's §6 (assets identified by content hash, so a map is never
-re-uploaded once cached).
-
-Quick start on a Pi (Raspberry Pi OS Lite, KMS enabled via
-`dtoverlay=vc4-kms-v3d`):
-
-```bash
-sudo apt install mpv python3-pip
-pip install -r pi-agent/requirements.txt
-
-# 1) fullscreen mpv with an IPC socket (headless DRM)
-mpv --idle=yes --force-window=yes --fullscreen --keep-open=yes \
-    --image-display-duration=inf --vo=gpu --gpu-context=drm \
-    --input-ipc-server=/tmp/mpv-dndjay.sock &
-
-# 2) the agent
-python3 pi-agent/agent.py --host 0.0.0.0 --port 8765
-```
-
-For boot-to-ready operation, install the two bundled systemd units
-(`pi-agent/mpv-dndjay.service`, `pi-agent/dndjay-agent.service`) and
-`avahi-daemon` so the Pi answers to `raspberrypi.local`.
-
-The agent converts the plugin's intuitive wire units to mpv:
-`video-zoom = log2(scale)`, `video-pan-x/y = x/y`, `video-rotate = rotate`.
-
----
 
 ## Known limitation — mobile background audio
 
@@ -166,5 +115,4 @@ src/
   view/modals.ts          Help + scene-settings popups
   view/help.ts            Per-tab help content
   settings/SettingsTab.ts Channel names, pad banks, loadouts, scene defaults, Pi
-pi-agent/                 Reference Python display agent + systemd units
 ```

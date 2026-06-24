@@ -10,10 +10,12 @@ export type MediaKind = 'image' | 'video';
  * Thin wrapper over the vault for the media this plugin cares about: audio for
  * pads, and images/videos for battlemaps.
  *
- * Audio is served as raw bytes ({@link readBytes}) that the {@link AudioEngine}
+ * On desktop, audio is served as raw bytes ({@link readBytes}) that the engine
  * decodes to `AudioBuffer`s — no object URLs or media elements, which sidesteps
- * the autoplay gating and CORS taint that silence Web Audio playback on desktop.
- * Battlemap images/videos still use {@link resourcePath} for `<img>`/`<video>`.
+ * the autoplay gating and CORS taint that silence Web Audio playback. On mobile
+ * the engine streams audio from {@link resourcePath} through an `<audio>` element
+ * instead (decoding multi-minute beds would OOM the WebView). Battlemap
+ * images/videos also use {@link resourcePath} for `<img>`/`<video>`.
  */
 export class VaultMedia {
 	constructor(private app: App) {}

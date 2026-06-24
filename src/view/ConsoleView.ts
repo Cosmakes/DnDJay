@@ -1,4 +1,4 @@
-import { ItemView, WorkspaceLeaf, setIcon } from 'obsidian';
+import { ItemView, Platform, WorkspaceLeaf, setIcon } from 'obsidian';
 import { MeterController } from '../audio/Meter';
 import { MusicTab } from './MusicTab';
 import { BattlemapTab } from './BattlemapTab';
@@ -64,7 +64,8 @@ export class ConsoleView extends ItemView {
 		}
 
 		this.bodyEl = root.createDiv({ cls: 'dndjay-body' });
-		this.meters.start();
+		// Meters are desktop-only (mobile streams audio outside the analyser graph).
+		if (!Platform.isMobile) this.meters.start();
 		this.showTab(this.activeTab);
 	}
 

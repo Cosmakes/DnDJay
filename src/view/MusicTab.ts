@@ -1,4 +1,4 @@
-import { Notice, setIcon } from 'obsidian';
+import { Notice, Platform, setIcon } from 'obsidian';
 import {
 	CHANNEL_THEMES,
 	MAIN_CHANNELS,
@@ -260,11 +260,14 @@ export class MusicTab {
 			text: bed ? bed.ref.name : isQuick ? 'one-shots' : '—',
 		});
 
-		// meter + fader row
+		// meter + fader row. On mobile, audio is streamed (not in an analyser
+		// graph), so the meter can't move — omit it rather than show a dead bar.
 		const body = strip.createDiv({ cls: 'dndjay-strip-body' });
-		const meter = body.createDiv({ cls: 'dndjay-meter' });
-		const fill = meter.createDiv({ cls: 'dndjay-meter-fill' });
-		fill.dataset.channel = String(c);
+		if (!Platform.isMobile) {
+			const meter = body.createDiv({ cls: 'dndjay-meter' });
+			const fill = meter.createDiv({ cls: 'dndjay-meter-fill' });
+			fill.dataset.channel = String(c);
+		}
 		createVerticalFader(body, {
 			value: this.host.engine.getVolume(c),
 			color: theme.accent,

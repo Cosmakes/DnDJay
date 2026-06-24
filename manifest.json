@@ -1,7 +1,7 @@
 {
 	"id": "dndjay",
 	"name": "DnDJay Soundboard",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "1.7.2",
 	"description": "A tabletop control console: a 4-channel Web Audio soundboard with loadouts, scenes and live meters.",
 	"author": "Cosmakes",

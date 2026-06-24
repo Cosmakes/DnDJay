@@ -8,7 +8,7 @@ A tabletop control console that lives in an Obsidian pane. Two tabs:
   sudden transitions.
 - **Battlemap** — a media library beside a framing stage. Pick a vault image or
   video, frame it (pan / zoom / rotate), and stream it live to a Raspberry Pi
-  driving an HDMI display.
+  driving an HDMI display. (NOT YET ESTABLISHED)
 
 All sounds and maps live in your **vault**. Settings persist via `data.json`.
 
